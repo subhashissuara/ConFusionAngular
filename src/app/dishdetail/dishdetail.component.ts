@@ -17,6 +17,7 @@ export class DishdetailComponent implements OnInit {
 
   dish: Dish;
   tmpDish: Dish;
+  errMess: string;
   dishIds: string[];
   prev: string;
   next: string;
@@ -24,7 +25,6 @@ export class DishdetailComponent implements OnInit {
   commentForm: FormGroup;
   @ViewChild('cform') commentFormDirective;
   commentStatus: boolean;
-  errorMessage: string;
 
   formErrors = {
     'author': '',
@@ -59,7 +59,7 @@ export class DishdetailComponent implements OnInit {
 
     this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
       // tslint:disable-next-line: max-line-length
-      .subscribe((dish) => { this.dish = dish; this.tmpDish = dish; this.setPrevNext(dish.id); }, errmessage => this.errorMessage = <any>errmessage);
+      .subscribe((dish) => { this.dish = dish; this.tmpDish = dish; this.setPrevNext(dish.id); }, errmess => this.errMess = <any>errmess);
   }
 
   createForm() {
@@ -130,7 +130,7 @@ export class DishdetailComponent implements OnInit {
       .subscribe(dish => {
         this.dish = dish; this.tmpDish = dish;
       },
-      errmessage => { this.dish = null; this.tmpDish = null; this.errorMessage = <any>errmessage; });
+      errmessage => { this.dish = null; this.tmpDish = null; this.errMess = <any>errmessage; });
 
     // reset comment form values and pristine state
     this.commentFormDirective.resetForm();
