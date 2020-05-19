@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs/operators';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
-  tmpDish: Dish;
+  dishcopy: Dish;
   errMess: string;
   dishIds: string[];
   prev: string;
@@ -59,7 +59,7 @@ export class DishdetailComponent implements OnInit {
 
     this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
       // tslint:disable-next-line: max-line-length
-      .subscribe((dish) => { this.dish = dish; this.tmpDish = dish; this.setPrevNext(dish.id); }, errmess => this.errMess = <any>errmess);
+      .subscribe((dish) => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); }, errmess => this.errMess = <any>errmess);
   }
 
   createForm() {
@@ -124,13 +124,12 @@ export class DishdetailComponent implements OnInit {
     // push comment to dish comments array in the dish model
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
-    this.tmpDish.comments.push(this.comment);
-
-    this.dishService.getDish(Number(this.tmpDish.id))
+    this.dishcopy.comments.push(this.comment);
+    this.dishService.putDish(this.dishcopy)
       .subscribe(dish => {
-        this.dish = dish; this.tmpDish = dish;
+        this.dish = dish; this.dishcopy = dish;
       },
-      errmessage => { this.dish = null; this.tmpDish = null; this.errMess = <any>errmessage; });
+      errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
 
     // reset comment form values and pristine state
     this.commentFormDirective.resetForm();
