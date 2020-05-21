@@ -1,0 +1,14 @@
+- sudo npm install -g @angular/cli@6.2.1
+- ng new conFusion --style=scss
+- npm install (After cd)
+- ng serve --open
+- npm install @angular/material@6.4.7 --save
+- npm install @angular/cdk@6.4.7 --save
+- npm install --save @angular/animations@6.1.7 (To allow animations)
+- npm install --save hammerjs@2.0.8 (Gestures)
+- npm install --save @angular/flex-layout@6.0.0-beta.18
+- ng generate component menu
+- ng build --prod
+
+- npm install json-server -g
+- json-server --watch db.json -d 2000
